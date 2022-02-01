@@ -1,10 +1,22 @@
 import './App.css';
 import { useState, useEffect } from 'react'
 import Day from './components/Day'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [days, setDays] = useState([])
-  const [totalHours, setTotalHours] = useState('0:00');
+  const [totalHours, setTotalHours] = useState('00:00');
+
+  const notify = (day) => toast.success(`Deleted day ${day}`, {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
 
   useEffect(() => {
     let item = JSON.parse(localStorage.getItem('days'))
@@ -30,7 +42,7 @@ function App() {
   }
 
   function addDay(){
-    setDays([...days, {day: days.length + 1, hours: 0, hour1:"00:00", hour2:"00:00"}])
+    setDays([...days, {day: days.length > 0 ? days[days.length - 1].day + 1 : 1, hours: 0, hour1:"00:00", hour2:"00:00"}])
   }
 
   const updateDay = (index, hours) => {
@@ -57,7 +69,7 @@ function saveDay(){
 function resetDay(){
   localStorage.clear()
   setDays([])
-  setTotalHours('0:00')
+  setTotalHours('00:00')
 }
 
 const updateTimeList = (index, t1, t2) => {
@@ -68,6 +80,19 @@ const updateTimeList = (index, t1, t2) => {
       day.hour2 = t2
     }
   }
+}
+
+const deleteDay = (index) => {
+  let newDays = []
+  for(let day of days){
+    console.log("current day:" + day.day)
+    if(day.day !== index){
+      newDays.push(day)
+    }
+  }
+  notify(index)
+  setDays(newDays)
+  console.log(days)
 }
 
   return (
@@ -83,9 +108,20 @@ const updateTimeList = (index, t1, t2) => {
         </div>
       </div>
       {days.map( (e, index) => {
-        return <Day key={index} day={e.day} updateDay={updateDay} hour1={e.hour1} hour2={e.hour2} updateHour={updateTimeList}></Day>
+        return <Day key={index} day={e.day} updateDay={updateDay} hour1={e.hour1} hour2={e.hour2} updateHour={updateTimeList} deleteDay={deleteDay}></Day>
       })}
       <div><h1>Total Hours: {totalHours}</h1></div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-function Day({day, updateDay, hour1, hour2, updateHour}) {
+function Day({day, updateDay, hour1, hour2, updateHour, deleteDay}) {
     const [period, setPeriod] = useState(null);
     const [time1, setTime1] = useState("00:00");
     const [time2, setTime2] = useState("00:00");
@@ -54,7 +56,10 @@ function Day({day, updateDay, hour1, hour2, updateHour}) {
 
     return (
         <div>
-            <h2>Day: {period}</h2>
+            <div className="day-heading-container">
+                <h2>Day: {period}</h2>
+                <FontAwesomeIcon className="day-trash" icon={faTrash} onClick={ () => deleteDay(period)} />
+            </div>
             <div className="time-container">
                 <label>From: </label>
                 <input className="time-1" type="time" onChange={ e => {

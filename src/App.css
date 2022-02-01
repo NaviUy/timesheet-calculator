@@ -63,3 +63,19 @@
   align-items: center;
   width: 13em;
 }
+
+.day-heading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-trash {
+  margin-left: 1em;
+  color: gray;
+  cursor: pointer;
+}
+
+.day-heading-container .day-trash:hover {
+  color: red;
+}

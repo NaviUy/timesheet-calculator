@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+.time-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.to-label {
+  margin-left: 10px;
+}
+
+.time-container label {
+  margin-right: 5px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 13em;
+}

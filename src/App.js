@@ -18,6 +18,26 @@ function App() {
     progress: undefined,
     });
 
+    const notifySaved = (message) => toast.success(`Successfully ${message}!`, {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+
+      const error = () => toast.error(`Something went wrong!`, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+
   useEffect(() => {
     let item = JSON.parse(localStorage.getItem('days'))
     if(item){
@@ -63,13 +83,23 @@ function App() {
 }
 
 function saveDay(){
-  localStorage.setItem('days', JSON.stringify(days))
+  try{
+    localStorage.setItem('days', JSON.stringify(days))
+    notifySaved("Saved")
+  } catch (e){
+    error()
+  }
+
 }
 
 function resetDay(){
-  localStorage.clear()
-  setDays([])
-  setTotalHours('00:00')
+  try { localStorage.clear()
+    setDays([])
+    setTotalHours('00:00')
+    notifySaved("Resetted")
+  } catch (e) {
+    error()
+  }
 }
 
 const updateTimeList = (index, t1, t2) => {

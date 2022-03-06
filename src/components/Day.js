@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
-function Day({day, updateDay, hour1, hour2, updateHour, deleteDay}) {
+function Day({day, date, updateDay, hour1, hour2, updateHour, deleteDay, today, updateDate, savednote, updateNote}) {
     const [period, setPeriod] = useState(null);
     const [time1, setTime1] = useState("00:00");
     const [time2, setTime2] = useState("00:00");
     const [hours, setHours] = useState();
+    const [payDate, setpayDate] = useState(today);
+    const [note, setNote] = useState("")
 
     useEffect(() => {
         setPeriod(day)
     }, [day])
+
+    useEffect(() => {
+        setpayDate(date)
+    }, [date])
 
     useEffect(() => {
         if(time1 && time2){
@@ -37,6 +43,10 @@ function Day({day, updateDay, hour1, hour2, updateHour, deleteDay}) {
         }
     }, [hour1, hour2])
 
+    useEffect(()=>{
+        setNote(savednote)
+    }, [savednote])
+
     function diff(start, end) {
         start = start.split(":");
         end = end.split(":");
@@ -54,11 +64,31 @@ function Day({day, updateDay, hour1, hour2, updateHour, deleteDay}) {
         return (hours <= 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
     }
 
+    function changeDate(e){
+        setpayDate(e)
+        updateDate(period, e)
+    }
+
+    function changeNote(e){
+        setNote(e)
+        updateNote(period, e)
+    }
+
     return (
         <div>
             <div className="day-heading-container">
                 <h2>Day: {period}</h2>
                 <FontAwesomeIcon className="day-trash" icon={faTrash} onClick={ () => deleteDay(period)} />
+            </div>
+            <div className="day-heading-container" id="date-container">
+                <h2 id="date-heading"><span className="date-heading-text">Date:</span>
+                    <input type='date' value={payDate} onChange={(e) => changeDate(e.target.value)}></input>
+                </h2>
+            </div>
+            <div className="day-heading-container" id="date-container">
+                <h2 id="date-heading"><span className="date-heading-text">Description:</span>
+                    <input type='text' value={note} onChange={(e) => changeNote(e.target.value)}></input>
+                </h2>
             </div>
             <div className="time-container">
                 <label>From: </label>

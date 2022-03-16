@@ -382,6 +382,7 @@ function GeneratePDF() {
       let aDate = new Date(date)
       return aDate.toLocaleDateString("en-US",
       {year: "numeric",
+      timeZone: 'UTC',
       month: "2-digit",
       day: "2-digit",
       });

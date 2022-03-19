@@ -143,7 +143,7 @@ function Calculator() {
     <div className="container">
       <div className="heading-container">
         <h1>Timesheet Calculator</h1>
-        <p>Please remember to save or all progress will be lossed.</p>
+        <p>Please remember to save or all progress will be lost.</p>
       </div>
       <div className="form-container">
         <div className="button-container">

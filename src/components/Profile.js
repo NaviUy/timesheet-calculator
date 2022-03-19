@@ -124,6 +124,7 @@ function Profile() {
                 <div className="profile-info">
                     <h1>Profile</h1>
                     <p>Used for generating invoices.</p>
+                    <p>Please remember to save or all progress will be lost.</p>
 
                     <h2>From:</h2>
                     <div className="profile-group">
